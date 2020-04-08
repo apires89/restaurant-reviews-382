@@ -1,0 +1,42 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @restaurant.name %>
+</p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @restaurant.address %>
+</p>
+
+<p>
+  <strong>Stars:</strong>
+  <%= @restaurant.stars %>
+</p>
+
+<% if @restaurant.chef_name.present? %>
+<p>
+  <strong>Chef:</strong>
+  <%= link_to @restaurant.chef_name, chef_restaurant_path %>
+</p>
+<% end %>
+
+<h1>Reviews</h1>
+<% if @restaurant.reviews.present? %>
+<ul class="list-group">
+  <% @restaurant.reviews.each do |review| %>
+   <li class="list-group-item">
+     <%= review.content %> - stars: <%= review.stars %>
+     <%= link_to "Remove", review_path(review), method: :delete,
+     data:{confirm: "Are you sure?"} %>
+   </li>
+  <% end %>
+</ul>
+<% else %>
+ <h1>This Restaurant has no reviews</h1>
+<% end %>
+
+<%= link_to "Leave a Review", new_restaurant_review_path(@restaurant) %>
+<%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
+<%= link_to 'Back', restaurants_path %>
